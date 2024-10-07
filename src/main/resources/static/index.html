@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scala Stack</title>
+</head>
+<body>
+<h1>Scala Stack</h1>
+<p>This is an example implementation of Scala Stack which uses Scala to create HTML, CSS and JavaScript on request. This means:</p>
+<ul>
+  <li>You can be 100% dynamic with all the resources in the response. You can create a custom HTML, CSS and JavaScript response.</li>
+  <li>The code is isomorphic (it uses a single language) which makes it simple to develop.</li>
+  <li>If you run it in development mode you can update most code and reload your page to instantly see your changes</li>
+  <li>No build or static files since everything is generated on a request</li>
+</ul>
+<h2>Scala Stack JS Compiler</h2>
+<p>This is a Spring Boot 3 Maven project setup that uses the  external library Scala Stack JS Compiler to compile ScalaJS source to JavaScript. It works in the following process</p>
+<ol>
+  <li>On Spring Boot startup it loads the necessary libraries for compilation of the source. It takes a few seconds and it is done once at startup to cache it.</li>
+  <li>When a request for a JavaScript is made it loads all ScalaJS files which are available at server runtime and compiles them to a JavaScript.</li>
+  <li>To speed things up you can cache the result</li>
+</ol>
+<h2>Dynamice Scala Stack Page</h2>
+<p>Follow the following link to test this stack with an 100% dynamic page</p>
+<a href="/page.html">Example page</a>
+<h3>Credits</h3>
+<p>Scala Stack is created by Carl Emmoth (github.com/aimmoth) and the Scala Stack JS Compilation was original created by ScalaFiddle, adjust by Carl Emmoth for Servlet and then upgraded by VirtusLab to Scala 3.</p>
+</body>
+</html>

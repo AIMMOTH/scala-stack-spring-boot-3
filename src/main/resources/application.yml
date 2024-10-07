@@ -1,0 +1,15 @@
+
+scala_stack:
+  compiler:
+    libs: src/main/resources/libs/
+    src: src/main/resources/static/scalajs/
+  environment: local
+  javascriptUrl: http://localhost:8081/app.js
+
+server:
+  address: 0.0.0.0
+
+logging:
+  level:
+    org: INFO
+    com.github.aimmoth: DEBUG

@@ -1,0 +1,17 @@
+openapi: 3.0.3
+info:
+  title: Spring Boot 3 with Open API
+  description: Models
+  version: 1.0-SNAPSHOT
+
+components:
+  schemas:
+    ServerTimeDto:
+      properties:
+        value:
+          type: string
+
+    HeartbeatResponse:
+      properties:
+        env:
+          type: string

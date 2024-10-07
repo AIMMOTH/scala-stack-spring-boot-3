@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.github.aimmoth</groupId>
+	<artifactId>scala-stack-spring-boot-3</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>Scala Stack</name>
+	<description>Scala Stack for Spring Boot 3 and Scala 3</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.0.13</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<java.version>21</java.version>
+		<openapi.generator.version>6.1.0</openapi.generator.version>
+		<springfox.swagger.version>3.0.0</springfox.swagger.version>
+		<jackson.databind.version>0.2.4</jackson.databind.version>
+		<lombok.version>1.18.34</lombok.version>
+
+		<mockito.version>5.2.0</mockito.version>
+		<junit.version>5.9.2</junit.version>
+
+		<scala.version>3.3.1</scala.version>
+		<scala.js.version>1.12.0</scala.js.version>
+	</properties>
+
+	<dependencies>
+		<!-- Compiler -->
+		<dependency>
+			<groupId>com.github.aimmoth.scala-stack.js-compiler</groupId>
+			<artifactId>scala-stack-js-compiler_3</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+		<!-- Spring Boot -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.projectlombok</groupId>
+					<artifactId>lombok</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- OPEN API -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${springfox.swagger.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>${jackson.databind.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+		<!-- Scala -->
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala3-library_3</artifactId>
+			<version>${scala.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala3-compiler_3</artifactId>
+			<version>${scala.version}</version>
+		</dependency>
+		<!-- Scala-tags -->
+		<dependency>
+			<groupId>com.lihaoyi</groupId>
+			<artifactId>scalatags_3</artifactId>
+			<version>0.13.1</version>
+		</dependency>
+		<!-- Scala JS -->
+		<dependency>
+			<groupId>org.scala-js</groupId>
+			<artifactId>scalajs-linker_2.13</artifactId>
+			<version>${scala.js.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.scala-js</groupId>
+			<artifactId>scalajs-library_2.13</artifactId>
+			<version>${scala.js.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.scala-js</groupId>
+			<artifactId>scalajs-dom_sjs1_2.13</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+
+		<!-- Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<!-- Necessary to solve bug in generated pom.xml -->
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-resources-plugin</artifactId>
+			</plugin>     
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>scala-maven-plugin</artifactId>
+				<version>4.8.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>testCompile</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<scalaVersion>${scala.version}</scalaVersion>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>${openapi.generator.version}</version>
+				<executions>
+					<execution>
+						<id>Platform Service API</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<generatorName>spring</generatorName>
+							<inputSpec>
+								${project.basedir}/src/main/resources/open-api/routes.yaml
+							</inputSpec>
+							<generateApiTests>false</generateApiTests>
+							<generateModelTests>false</generateModelTests>
+							<generateSupportingFiles>true</generateSupportingFiles>
+							<configOptions>
+								<dateLibrary>java8</dateLibrary>
+								<interfaceOnly>true</interfaceOnly>
+								<delegatePattern>true</delegatePattern>
+								<useSpringBoot3>true</useSpringBoot3>
+							</configOptions>
+							<apiPackage>com.github.aimmoth.scala-stack.open-api.api.controller</apiPackage>
+							<modelPackage>com.github.aimmoth.scala-stack.open-api.api.dto</modelPackage>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>target/generated-sources/openapi/src/main/java</source>
+<!--								<source>src/main/java</source>-->
+								<source>src/main/scala</source>
+								<source>src/main/resources/static/scalajs</source>
+							</sources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>add-test-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/test/scala</source>
+								<source>src/test/scalajs</source>
+								<source>src/test/resources/src</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

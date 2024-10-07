@@ -1,0 +1,56 @@
+openapi: 3.0.3
+info:
+  title: Spring Boot 3 with Open API
+  description: |-
+    A simple Spring Boot 3 implementation with:
+    - Open API (following https://www.baeldung.com/spring-boot-openapi-api-first-development)
+    - Controller
+    - Service
+    - Autowired (dependency injection DI)
+    - Properties (both properties and YAML/YML)
+    - Static web files
+  version: 1.0-SNAPSHOT
+
+paths:
+
+  /app.js:
+    get:
+      tags:
+        - javascript
+      summary: Get the compiled application JavaScript
+      operationId: getAppScript
+      responses:
+        200:
+          description: Success
+          content:
+            text/javascript:
+              schema:
+                type: string
+
+  /page.html:
+    get:
+      tags:
+        - html
+      summary: Get a page page
+      operationId: getPage
+      responses:
+        200:
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+
+  /style.css:
+    get:
+      tags:
+        - css
+      summary: Get the style sheet
+      operationId: getStyle
+      responses:
+        200:
+          description: Success
+          content:
+            text/css:
+              schema:
+                type: string
